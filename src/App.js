@@ -1,25 +1,28 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { Component } from "react";
+import "./styles.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Searchbar from "./Components/Searchbar/";
+import ImageGallery from "./Components/ImageGallery";
+import Button from "./Components/Button/Button";
+import Modal from "./Components/Modal";
+
+export default class App extends Component {
+  state = {
+    images: [],
+    currentPage: 1,
+    searchQuery: "",
+    isLoading: false,
+    showModal: false,
+    largeImgSrc: "",
+    largeImgAlt: "",
+    error: null,
+  };
+
+  render() {
+    return (
+      <div style={{ maxWidth: 1170, margin: "0 auto", padding: 20 }}>
+        <Searchbar />
+      </div>
+    );
+  }
 }
-
-export default App;
