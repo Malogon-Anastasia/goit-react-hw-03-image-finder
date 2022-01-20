@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { ImSearch } from "react-icons/im";
+import { toast } from "react-toastify";
 
 import {
   SearchbarStyles,
@@ -7,7 +8,7 @@ import {
   SearchFormInputStyles,
   SearchFormStyles,
 } from "./Searchbar.styled";
-// import { ImSearch } from 'react-icons/im';
+
 // import { toast } from 'react-toastify';
 
 // const styles = { form: { marginBottom: 20 } };
@@ -25,11 +26,11 @@ export default class Searchbar extends Component {
     event.preventDefault();
 
     if (this.state.query.trim() === "") {
-      alert("Введите название картинки");
+      toast.error("Введите название картинки");
       return;
     }
 
-    this.props.onSubmit(this.state.query);
+    this.props.qwe(this.state.query);
     this.setState({ query: "" });
   };
 
@@ -42,13 +43,11 @@ export default class Searchbar extends Component {
           </ButtonFormStyles>
 
           <SearchFormInputStyles
-            className="SearchForm-input"
             type="text"
-            autoComplete="off"
-            autoFocus
+            name="pokemonName"
             placeholder="Search images and photos"
             value={this.state.query}
-            onChange={this.handleChange}
+            onChange={this.handleNameChange}
           />
         </SearchFormStyles>
       </SearchbarStyles>
