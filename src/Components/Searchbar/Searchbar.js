@@ -40,7 +40,7 @@ export default class Searchbar extends Component {
 
           <SearchFormInputStyles
             type="text"
-            name="pokemonName"
+            name="searchQuery"
             placeholder="Search images and photos"
             value={this.state.searchQuery}
             onChange={this.handleNameChange}
