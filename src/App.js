@@ -10,23 +10,27 @@ import Modal from "./Components/Modal";
 import "./styles.css";
 import { fetchImages } from "./Services/images-api";
 
-let counter = 1;
 class App extends Component {
   state = {
     filter: "",
     data: [],
+    counter: 1,
     status: "idle",
     id: "",
     endOfList: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { filter } = this.state;
+    const { filter, counter } = this.state;
     if (prevState.filter !== this.state.filter) {
       this.setState({ status: "pending" });
 
-      fetchImages(filter, 1).then((response) => {
-        this.setState({ data: [...response], status: "resolved" });
+      fetchImages(filter, counter).then((response) => {
+        this.setState({
+          data: [...response],
+          status: "resolved",
+          counter: counter + 1,
+        });
       });
     }
   }
@@ -35,22 +39,19 @@ class App extends Component {
     event.preventDefault();
     const inputValue = event.target.elements.input.value;
     const form = event.target;
-    const notify = () => toast.error("Please enter a search query");
+    const notify = () => toast.error("Введите название картинки");
 
     if (inputValue) {
-      this.setState({ filter: inputValue, endOfList: false });
+      this.setState({ filter: inputValue, endOfList: false, counter: 1 });
       form.reset();
-      counter = 1;
     } else {
       notify();
     }
   };
 
   onButtonClick = () => {
-    const { filter } = this.state;
-    counter += 1;
-
-    this.setState({ status: "load" });
+    const { filter, counter } = this.state;
+    this.setState({ status: "load", counter: counter + 1 });
 
     fetchImages(filter, counter).then((response) => {
       this.setState((prevState) => {
@@ -108,7 +109,7 @@ class App extends Component {
             endOfList={endOfList}
             status={status}
           />
-          <ToastContainer position="top-right" />
+          <ToastContainer />
           {data && (
             <Modal
               data={data}
