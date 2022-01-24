@@ -1,52 +1,33 @@
-import { Component } from "react";
+import React from "react";
 import { ImSearch } from "react-icons/im";
-import { toast } from "react-toastify";
-
+import propTypes from "prop-types";
 import {
   SearchbarStyles,
+  SearchFormStyles,
   ButtonFormStyles,
   SearchFormInputStyles,
-  SearchFormStyles,
 } from "./Searchbar.styled";
 
-export default class Searchbar extends Component {
-  state = {
-    searchQuery: "",
-  };
+const Searchbar = ({ onSubmit }) => {
+  return (
+    <SearchbarStyles>
+      <SearchFormStyles onSubmit={onSubmit}>
+        <ButtonFormStyles type="submit" name="button">
+          <ImSearch />
+        </ButtonFormStyles>
 
-  handleNameChange = (event) => {
-    this.setState({ searchQuery: event.currentTarget.value.toLowerCase() });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (this.state.searchQuery.trim() === "") {
-      toast.error("Введите название картинки");
-      return;
-    }
-
-    this.props.onSubmit(this.state.searchQuery);
-    this.setState({ searchQuery: "" });
-  };
-
-  render() {
-    return (
-      <SearchbarStyles>
-        <SearchFormStyles onSubmit={this.handleSubmit}>
-          <ButtonFormStyles type="submit">
-            <ImSearch />
-          </ButtonFormStyles>
-
-          <SearchFormInputStyles
-            type="text"
-            name="searchQuery"
-            placeholder="Search images and photos"
-            value={this.state.searchQuery}
-            onChange={this.handleNameChange}
-          />
-        </SearchFormStyles>
-      </SearchbarStyles>
-    );
-  }
-}
+        <SearchFormInputStyles
+          name="input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchFormStyles>
+    </SearchbarStyles>
+  );
+};
+Searchbar.propTypes = {
+  onSubmit: propTypes.func,
+};
+export default Searchbar;

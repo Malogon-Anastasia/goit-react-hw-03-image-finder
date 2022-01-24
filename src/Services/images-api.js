@@ -1,19 +1,11 @@
-const API_KEY = "20648109-aff5f53cd54a5f40fa07937d6";
+import axios from "axios";
 
-function fetchImages(name) {
-  return fetch(
-    `https://pixabay.com/api/?q=cat&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-  ).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
+axios.defaults.baseURL = "https://pixabay.com/api/";
+const KEY = "20648109-aff5f53cd54a5f40fa07937d6";
 
-    return Promise.reject(new Error(`Нет покемона с именем ${name}`));
-  });
-}
-
-const api = {
-  fetchImages,
+export const fetchImages = async (searchQuery, counter) => {
+  const response = await axios.get(
+    `?q=${searchQuery}&page=${counter}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+  );
+  return response.data.hits;
 };
-
-export default api;

@@ -1,20 +1,26 @@
-import { Component } from "react";
+import React from "react";
+import propTypes from "prop-types";
+import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 import { ImageGalleryStyles } from "./ImageGallery.styled";
 
-export default class ImageGallery extends Component {
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.searchQuery !== this.props.searchQuery) {
-      console.log("Изменение!");
-      console.log("prevProps.searchQuery: ", prevProps.searchQuery);
-      console.log("this.props.searchQuery: ", this.props.searchQuery);
-    }
-  }
-  render() {
-    return (
-      <div>
-        {/* <h1>Pictures</h1> */}
-        <ImageGalleryStyles>{this.props.searchQuery}</ImageGalleryStyles>
-      </div>
-    );
-  }
-}
+const ImageGallery = ({ data, onImageClick }) => {
+  return (
+    <ImageGalleryStyles>
+      <ImageGalleryItem data={data} onImageClick={onImageClick} />
+    </ImageGalleryStyles>
+  );
+};
+
+ImageGallery.propTypes = {
+  data: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.number,
+      tags: propTypes.string.isRequired,
+      largeImageURL: propTypes.string.isRequired,
+      previewURL: propTypes.string.isRequired,
+    })
+  ),
+  onImageClick: propTypes.func,
+};
+
+export default ImageGallery;

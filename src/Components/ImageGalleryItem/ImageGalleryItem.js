@@ -1,17 +1,17 @@
-import PropTypes from "prop-types";
+import React from "react";
+import { GelleryItem, GelleryImage } from "./ImageGalleryItem.styled";
 
-function ImageGalleryItem({ image, alt, onModalClick }) {
-  return (
-    <li className="ImageGalleryItem" onClick={onModalClick}>
-      <img src={image} alt={alt} className="ImageGalleryItem-image" />
-    </li>
-  );
-}
-
-ImageGalleryItem.propTypes = {
-  image: PropTypes.string,
-  alt: PropTypes.string,
-  onModalClick: PropTypes.func,
+const ImageGalleryItem = ({ data, onImageClick }) => {
+  return data.map((item) => (
+    <GelleryItem key={item.webformatURL} onClick={onImageClick}>
+      <GelleryImage
+        src={item.webformatURL}
+        width={400}
+        alt={item.tags}
+        path={item.largeImageURL}
+      />
+    </GelleryItem>
+  ));
 };
 
 export default ImageGalleryItem;
